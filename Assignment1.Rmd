@@ -125,21 +125,22 @@ kable(
 
 ### Time series plot of the average number of steps taken.
 
-Here I assume, since we are not told average over what, it is the daily average. Why not the 5 minute intervals? Because those are totals (over their 5 minute periods), not averages.
+Here I assume, since we are not told average over what, it is the daily average. Why not the 5 minute intervals? Because those are totals (over their 5 minute periods), not averages. No, I'm told is average over the days, for the interval. 
 
 ```{r}
 average_daily_steps <- activity %>% 
-    group_by(date) %>% 
+    group_by(interval) %>% 
     summarise(average = mean(steps, na.rm = TRUE))
 ```
 
 ```{r}
 average_daily_steps %>% 
-    ggplot(aes(y = average, x = date)) +
+    ggplot(aes(y = average, x = interval)) +
     geom_point() +
     geom_line() +
     labs(title = "Average daily number of steps taken")
 ```
+
 As we can see there are some days with all missing values, where our mean(na.rm=TRUE) fails. The time evolution is quite erratic, but most probably has some kind of autocorrelation structure (probably negative).
 
 ### The 5-minute interval that, on average, contains the maximum number of steps
